@@ -35,9 +35,15 @@
 
 ## 2.文件说明
 
-## 3.实际效果及测试数据
+### 2.1 serialDriver.cpp 和serialDriver.hpp
+* 
 
-### 3.1实验条件：
+## 3. 实际效果及测试数据
+
+### 3.1 实际效果
+* 测试阶段可达到的最大稳定带宽为双工3M波特率
+* 实际比赛时为了更高的正确率和更高的稳定性，采用了双工2M，可支持至少4个ROS节点
+### 3.2 测试条件：
   * UART: 2M异步，stop bits = 2,  oversample = 16, simple sample = true, 无校验位，start bit = 1, 数据位8bits
 
   * 上位机（同一个serial driver node. 开tx与rx线程）
@@ -52,7 +58,20 @@
   * 下位机：
     * TX: 调用NewRosComm transmit API, 每毫秒传输五个TWOCRC-GIMBAL-MSG
     * RX：下位机通用decode
-    
+
+### 3.2 实验效果
+
+* Ozone 相关数据
+![图片1](./img/embTest1.png)
+
+* system viem
+![图片2](./img/embTest2.png)
+
+* 上位机统计相关数据
+![图片3](./img/ROStest1.png)
 
 ## 4.未来优化方向
-  * 
+  * 上下位机进行时间戳同步，同时通讯延时
+  * 增加可用带宽，实现更高速通信
+  * 优化缓冲区数据处理方式，降低CRC错误率
+  * 冗余带宽可以用来其他数据的传输以及保存，例如下位机产生的log文件可以通过uart存储在上位机，便于比赛之后复盘分析原因
